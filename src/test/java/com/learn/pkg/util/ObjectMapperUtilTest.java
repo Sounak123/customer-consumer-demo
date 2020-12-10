@@ -4,17 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learn.pkg.model.kafka.KafkaCustomerAddress;
 import com.learn.pkg.model.kafka.KafkaCustomerDataRequest;
 
 @ExtendWith(MockitoExtension.class)
 public class ObjectMapperUtilTest {
-
-  @Mock ObjectMapper objMapper;
 
   @Test
   public void testGetJsonFromObj() {

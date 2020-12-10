@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.learn.pkg.converter.CustomerDataMasker;
+import com.learn.pkg.converter.KafkaCustomerDataRequestConverter;
 import com.learn.pkg.dao.ErrorLogRepository;
 import com.learn.pkg.model.ErrorLog;
 import com.learn.pkg.model.kafka.KafkaCustomerDataRequest;
@@ -22,7 +22,7 @@ public class ConsumerServiceAspect {
 
   @Autowired private ErrorLogRepository errorLogRepository;
 
-  @Autowired private CustomerDataMasker customerConsumerDataMasker;
+  @Autowired private KafkaCustomerDataRequestConverter customerConsumerDataMasker;
 
   @AfterThrowing(
       pointcut = "execution(* com.learn.pkg.service.ConsumerServiceImpl.publishCustomerData(..))",

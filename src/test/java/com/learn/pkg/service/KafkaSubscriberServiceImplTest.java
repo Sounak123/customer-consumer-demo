@@ -1,6 +1,6 @@
 package com.learn.pkg.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -12,16 +12,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.learn.pkg.converter.CustomerDataMasker;
+import com.learn.pkg.converter.KafkaCustomerDataRequestConverter;
 import com.learn.pkg.model.kafka.PublisherRequest;
 import com.learn.pkg.util.ObjectMapperUtilTest;
 
 @ExtendWith(MockitoExtension.class)
-public class KafkaSubscriberServiceTest {
+public class KafkaSubscriberServiceImplTest {
 
-  @InjectMocks private KafkaSubscriberService subscriberService;
+  @InjectMocks private KafkaSubscriberServiceImpl subscriberService;
 
-  @Mock private CustomerDataMasker customerConsumerDataMasker;
+  @Mock private KafkaCustomerDataRequestConverter customerConsumerDataMasker;
 
   @Mock private ConsumerService consumerService;
 
@@ -42,11 +42,20 @@ public class KafkaSubscriberServiceTest {
             ObjectMapperUtilTest.getCustomerData(), "transaction-id", "activity-id");
     Mockito.when(customerConsumerDataMasker.convert(Mockito.any()))
         .thenThrow(new RuntimeException("Unable to convert"));
-    try {
+    /*try {
       subscriberService.subscribe(publisherRequest);
     } catch (RuntimeException e) {
       assertEquals("Unable to convert", e.getMessage());
       verify(consumerService, never()).publishCustomerData(Mockito.any());
-    }
+    }*/
+
+    assertThatExceptionOfType(RuntimeException.class)
+        .isThrownBy(
+            () -> {
+              subscriberService.subscribe(publisherRequest);
+            })
+        .withMessage("Unable to convert");
+
+    verify(consumerService, never()).publishCustomerData(Mockito.any());
   }
 }

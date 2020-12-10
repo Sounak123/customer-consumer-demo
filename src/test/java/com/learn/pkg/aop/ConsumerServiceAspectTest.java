@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.learn.pkg.converter.CustomerDataMasker;
+import com.learn.pkg.converter.KafkaCustomerDataRequestConverter;
 import com.learn.pkg.dao.ErrorLogRepository;
 import com.learn.pkg.model.kafka.PublisherRequest;
 import com.learn.pkg.util.ObjectMapperUtilTest;
@@ -25,7 +25,7 @@ public class ConsumerServiceAspectTest {
 
   @Mock private ErrorLogRepository errorLogRepository;
 
-  @Mock private CustomerDataMasker customerConsumerDataMasker;
+  @Mock private KafkaCustomerDataRequestConverter customerConsumerDataMasker;
 
   @Mock(answer = Answers.RETURNS_MOCKS)
   private JoinPoint joinPoint;

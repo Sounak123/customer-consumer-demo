@@ -11,9 +11,9 @@ import com.learn.pkg.model.kafka.KafkaCustomerDataRequest;
 import com.learn.pkg.util.ObjectMapperUtilTest;
 
 @ExtendWith(MockitoExtension.class)
-public class CustomerDataMaskerTest {
+public class KafkaCustomerDataRequestConverterTest {
 
-  @InjectMocks private CustomerDataMasker customerConsumerDataMasker;
+  @InjectMocks private KafkaCustomerDataRequestConverter customerConsumerDataMasker;
 
   @Test
   public void testConvert() {

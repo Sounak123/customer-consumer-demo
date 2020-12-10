@@ -6,7 +6,7 @@ import com.learn.pkg.constants.MaskEnum;
 import com.learn.pkg.model.kafka.KafkaCustomerDataRequest;
 
 @Component
-public class CustomerDataMasker implements Converter<KafkaCustomerDataRequest> {
+public class KafkaCustomerDataRequestConverter implements Converter<KafkaCustomerDataRequest> {
 
   @Override
   public KafkaCustomerDataRequest convert(KafkaCustomerDataRequest object) {

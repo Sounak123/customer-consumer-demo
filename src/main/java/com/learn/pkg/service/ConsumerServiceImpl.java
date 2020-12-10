@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.learn.pkg.converter.CustomerDataMasker;
+import com.learn.pkg.converter.KafkaCustomerDataRequestConverter;
 import com.learn.pkg.dao.AuditLogRepository;
 import com.learn.pkg.model.AuditLog;
 import com.learn.pkg.model.kafka.KafkaCustomerDataRequest;
@@ -18,7 +18,7 @@ public class ConsumerServiceImpl implements ConsumerService {
 
   @Autowired private AuditLogRepository auditLogRepository;
 
-  @Autowired private CustomerDataMasker customerConsumerDataMasker;
+  @Autowired private KafkaCustomerDataRequestConverter customerConsumerDataMasker;
 
   @Override
   public void publishCustomerData(PublisherRequest publisherRequest) {

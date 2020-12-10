@@ -1,6 +1,6 @@
 package com.learn.pkg.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.learn.pkg.converter.CustomerDataMasker;
+import com.learn.pkg.converter.KafkaCustomerDataRequestConverter;
 import com.learn.pkg.dao.AuditLogRepository;
 import com.learn.pkg.model.kafka.PublisherRequest;
 import com.learn.pkg.util.ObjectMapperUtilTest;
@@ -24,7 +24,7 @@ public class ConsumerServiceImplTest {
 
   @Mock private AuditLogRepository auditLogRepository;
 
-  @Mock private CustomerDataMasker customerConsumerDataMasker;
+  @Mock private KafkaCustomerDataRequestConverter customerConsumerDataMasker;
 
   @Test
   public void testPublishCustomerData() {
@@ -43,10 +43,17 @@ public class ConsumerServiceImplTest {
             ObjectMapperUtilTest.getCustomerData(), "transaction-id", "activity-id");
     Mockito.when(auditLogRepository.save(Mockito.any()))
         .thenThrow(new ServiceException("Unable to persist"));
-    try {
+    /*try {
       consumerService.publishCustomerData(publisherRequest);
     } catch (ServiceException e) {
       assertEquals("Unable to persist", e.getMessage());
-    }
+    }*/
+
+    assertThatExceptionOfType(ServiceException.class)
+        .isThrownBy(
+            () -> {
+              consumerService.publishCustomerData(publisherRequest);
+            })
+        .withMessage("Unable to persist");
   }
 }
