@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.learn.pkg.converter.KafkaCustomerDataRequestConverter;
 import com.learn.pkg.dao.ErrorLogRepository;
-import com.learn.pkg.model.ErrorLog;
+import com.learn.pkg.entity.ErrorLog;
 import com.learn.pkg.model.kafka.KafkaCustomerDataRequest;
 import com.learn.pkg.model.kafka.PublisherRequest;
 import com.learn.pkg.util.ObjectMapperUtil;

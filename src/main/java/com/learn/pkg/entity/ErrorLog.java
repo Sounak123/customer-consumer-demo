@@ -1,4 +1,4 @@
-package com.learn.pkg.model;
+package com.learn.pkg.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,15 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "AUDIT_LOG")
-public class AuditLog {
+@Table(name = "ERROR_LOG")
+public class ErrorLog {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @Column(name = "customer_number")
-  private String customerNumber;
+  @Column(name = "error_type")
+  private String errorType;
+
+  @Column(name = "error_description")
+  private String errorDescription;
 
   @Column(columnDefinition = "JSON")
   private String payload;
@@ -29,12 +32,20 @@ public class AuditLog {
     this.id = id;
   }
 
-  public String getCustomerNumber() {
-    return customerNumber;
+  public String getErrorType() {
+    return errorType;
   }
 
-  public void setCustomerNumber(String customerNumber) {
-    this.customerNumber = customerNumber;
+  public void setErrorType(String errorType) {
+    this.errorType = errorType;
+  }
+
+  public String getErrorDescription() {
+    return errorDescription;
+  }
+
+  public void setErrorDescription(String errorDescription) {
+    this.errorDescription = errorDescription;
   }
 
   public String getPayload() {

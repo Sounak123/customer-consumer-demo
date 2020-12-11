@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.learn.pkg.aop.ConsumerServiceAspectTest;
 import com.learn.pkg.converter.KafkaCustomerDataRequestConverter;
 import com.learn.pkg.model.kafka.PublisherRequest;
 import com.learn.pkg.util.ObjectMapperUtilTest;
@@ -28,7 +29,7 @@ public class KafkaSubscriberServiceImplTest {
   @Test
   public void testSubscribe() {
     PublisherRequest publisherRequest =
-        new PublisherRequest(
+        ConsumerServiceAspectTest.createPublisherRequest(
             ObjectMapperUtilTest.getCustomerData(), "transaction-id", "activity-id");
     subscriberService.subscribe(publisherRequest);
 
@@ -38,16 +39,10 @@ public class KafkaSubscriberServiceImplTest {
   @Test
   public void testSubscribeFailure() {
     PublisherRequest publisherRequest =
-        new PublisherRequest(
+        ConsumerServiceAspectTest.createPublisherRequest(
             ObjectMapperUtilTest.getCustomerData(), "transaction-id", "activity-id");
     Mockito.when(customerConsumerDataMasker.convert(Mockito.any()))
         .thenThrow(new RuntimeException("Unable to convert"));
-    /*try {
-      subscriberService.subscribe(publisherRequest);
-    } catch (RuntimeException e) {
-      assertEquals("Unable to convert", e.getMessage());
-      verify(consumerService, never()).publishCustomerData(Mockito.any());
-    }*/
 
     assertThatExceptionOfType(RuntimeException.class)
         .isThrownBy(

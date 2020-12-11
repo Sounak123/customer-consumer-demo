@@ -7,8 +7,6 @@ public class KafkaCustomerAddress {
   private String street;
   private String postalCode;
 
-  public KafkaCustomerAddress() {}
-
   public String getAddressLine1() {
     return addressLine1;
   }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.learn.pkg.converter.KafkaCustomerDataRequestConverter;
 import com.learn.pkg.dao.AuditLogRepository;
-import com.learn.pkg.model.AuditLog;
+import com.learn.pkg.entity.AuditLog;
 import com.learn.pkg.model.kafka.KafkaCustomerDataRequest;
 import com.learn.pkg.model.kafka.PublisherRequest;
 import com.learn.pkg.util.ObjectMapperUtil;

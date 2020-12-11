@@ -3,6 +3,7 @@ package com.learn.pkg.converter;
 import org.springframework.stereotype.Component;
 
 import com.learn.pkg.constants.MaskEnum;
+import com.learn.pkg.model.kafka.KafkaCustomerAddress;
 import com.learn.pkg.model.kafka.KafkaCustomerDataRequest;
 
 @Component
@@ -11,7 +12,7 @@ public class KafkaCustomerDataRequestConverter implements Converter<KafkaCustome
   @Override
   public KafkaCustomerDataRequest convert(KafkaCustomerDataRequest object) {
 
-    KafkaCustomerDataRequest kafkaCustomerRequest = new KafkaCustomerDataRequest(object);
+    KafkaCustomerDataRequest kafkaCustomerRequest = createNewKafkaCustomerRequestObject(object);
 
     maskFields(kafkaCustomerRequest);
 
@@ -33,5 +34,29 @@ public class KafkaCustomerDataRequestConverter implements Converter<KafkaCustome
         kafkaCustomerRequest
             .getEmail()
             .replaceAll(MaskEnum.EMAIL_MASK_PATTERN.getValue(), MaskEnum.REPLACEMENT.getValue()));
+  }
+
+  private KafkaCustomerDataRequest createNewKafkaCustomerRequestObject(
+      KafkaCustomerDataRequest object) {
+    KafkaCustomerDataRequest customer = new KafkaCustomerDataRequest();
+    customer.setCustomerNumber(object.getCustomerNumber());
+    customer.setFirstName(object.getFirstName());
+    customer.setLastName(object.getLastName());
+    customer.setBirthdate(object.getBirthdate());
+    customer.setCountry(object.getCountry());
+    customer.setCountryCode(object.getCountryCode());
+    customer.setMobileNumber(object.getMobileNumber());
+    customer.setEmail(object.getEmail());
+    customer.setCustomerStatus(object.getCustomerStatus());
+
+    KafkaCustomerAddress address = new KafkaCustomerAddress();
+    address.setAddressLine1(object.getAddress().getAddressLine1());
+    address.setAddressLine2(object.getAddress().getAddressLine2());
+    address.setStreet(object.getAddress().getStreet());
+    address.setPostalCode(object.getAddress().getPostalCode());
+
+    customer.setAddress(address);
+
+    return customer;
   }
 }

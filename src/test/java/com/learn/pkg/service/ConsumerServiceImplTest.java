@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.learn.pkg.aop.ConsumerServiceAspectTest;
 import com.learn.pkg.converter.KafkaCustomerDataRequestConverter;
 import com.learn.pkg.dao.AuditLogRepository;
 import com.learn.pkg.model.kafka.PublisherRequest;
@@ -29,7 +30,7 @@ public class ConsumerServiceImplTest {
   @Test
   public void testPublishCustomerData() {
     PublisherRequest publisherRequest =
-        new PublisherRequest(
+        ConsumerServiceAspectTest.createPublisherRequest(
             ObjectMapperUtilTest.getCustomerData(), "transaction-id", "activity-id");
     consumerService.publishCustomerData(publisherRequest);
 
@@ -39,15 +40,10 @@ public class ConsumerServiceImplTest {
   @Test
   public void testPublishCustomerDataFailure() {
     PublisherRequest publisherRequest =
-        new PublisherRequest(
+        ConsumerServiceAspectTest.createPublisherRequest(
             ObjectMapperUtilTest.getCustomerData(), "transaction-id", "activity-id");
     Mockito.when(auditLogRepository.save(Mockito.any()))
         .thenThrow(new ServiceException("Unable to persist"));
-    /*try {
-      consumerService.publishCustomerData(publisherRequest);
-    } catch (ServiceException e) {
-      assertEquals("Unable to persist", e.getMessage());
-    }*/
 
     assertThatExceptionOfType(ServiceException.class)
         .isThrownBy(
